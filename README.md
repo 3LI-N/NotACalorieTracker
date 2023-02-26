@@ -1,4 +1,4 @@
-# flutter_application_1
+# NotACalorieTracker
 
 A new Flutter project.
 
