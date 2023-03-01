@@ -27,7 +27,7 @@ class _DetailScreenState extends State<DetailScreen> {
     if (response.statusCode == 200) {
       var decodedResponse = convert.jsonDecode(response.body);
       print('===================$decodedResponse');
-      foodData = FoodData.fromMap(decodedResponse);
+      foodData = FoodData.fromJson(decodedResponse);
       print('===================$foodData');
       setState(() {
         loading = false;

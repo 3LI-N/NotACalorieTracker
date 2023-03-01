@@ -1,497 +1,495 @@
 // To parse this JSON data, do
 //
-//     final foodData = foodDataFromMap(jsonString);
+//     final foodData = foodDataFromJson(jsonString);
 
 import 'dart:convert';
 
-FoodData foodDataFromMap(String str) => FoodData.fromMap(json.decode(str));
+FoodData foodDataFromJson(String str) => FoodData.fromJson(json.decode(str));
 
-String foodDataToMap(FoodData data) => json.encode(data.toMap());
+String foodDataToJson(FoodData data) => json.encode(data.toJson());
 
 class FoodData {
-  FoodData({
-    this.wweiaFoodCategory,
-    this.description,
-    this.foodAttributes,
-    this.foodCode,
-    this.inputFoods,
-    this.startDate,
-    this.endDate,
-    this.foodComponents,
-    this.foodClass,
-    this.fdcId,
-    this.publicationDate,
-    this.foodNutrients,
-    this.foodPortions,
-    this.dataType,
-  });
+    FoodData({
+        this.foodClass,
+        this.description,
+        this.foodNutrients,
+        this.foodAttributes,
+        this.foodCode,
+        this.startDate,
+        this.endDate,
+        this.wweiaFoodCategory,
+        this.dataType,
+        this.fdcId,
+        this.foodPortions,
+        this.publicationDate,
+        this.inputFoods,
+    });
 
-  WweiaFoodCategory? wweiaFoodCategory;
-  String? description;
-  List<FoodAttribute>? foodAttributes;
-  String? foodCode;
-  List<InputFood>? inputFoods;
-  String? startDate;
-  String? endDate;
-  List<dynamic>? foodComponents;
-  String? foodClass;
-  String? fdcId;
-  String? publicationDate;
-  List<FoodNutrient>? foodNutrients;
-  List<FoodPortion>? foodPortions;
-  String? dataType;
+    String? foodClass;
+    String? description;
+    List<FoodNutrient>? foodNutrients;
+    List<FoodAttribute>? foodAttributes;
+    String? foodCode;
+    String? startDate;
+    String? endDate;
+    WweiaFoodCategory? wweiaFoodCategory;
+    String? dataType;
+    int? fdcId;
+    List<FoodPortion>? foodPortions;
+    String? publicationDate;
+    List<InputFood>? inputFoods;
 
-  FoodData copyWith({
-    WweiaFoodCategory? wweiaFoodCategory,
-    String? description,
-    List<FoodAttribute>? foodAttributes,
-    String? foodCode,
-    List<InputFood>? inputFoods,
-    String? startDate,
-    String? endDate,
-    List<dynamic>? foodComponents,
-    String? foodClass,
-    String? fdcId,
-    String? publicationDate,
-    List<FoodNutrient>? foodNutrients,
-    List<FoodPortion>? foodPortions,
-    String? dataType,
-  }) =>
-      FoodData(
-        wweiaFoodCategory: wweiaFoodCategory ?? this.wweiaFoodCategory,
-        description: description ?? this.description,
-        foodAttributes: foodAttributes ?? this.foodAttributes,
-        foodCode: foodCode ?? this.foodCode,
-        inputFoods: inputFoods ?? this.inputFoods,
-        startDate: startDate ?? this.startDate,
-        endDate: endDate ?? this.endDate,
-        foodComponents: foodComponents ?? this.foodComponents,
-        foodClass: foodClass ?? this.foodClass,
-        fdcId: fdcId ?? this.fdcId,
-        publicationDate: publicationDate ?? this.publicationDate,
-        foodNutrients: foodNutrients ?? this.foodNutrients,
-        foodPortions: foodPortions ?? this.foodPortions,
-        dataType: dataType ?? this.dataType,
-      );
+    FoodData copyWith({
+        String? foodClass,
+        String? description,
+        List<FoodNutrient>? foodNutrients,
+        List<FoodAttribute>? foodAttributes,
+        String? foodCode,
+        String? startDate,
+        String? endDate,
+        WweiaFoodCategory? wweiaFoodCategory,
+        String? dataType,
+        int? fdcId,
+        List<FoodPortion>? foodPortions,
+        String? publicationDate,
+        List<InputFood>? inputFoods,
+    }) => 
+        FoodData(
+            foodClass: foodClass ?? this.foodClass,
+            description: description ?? this.description,
+            foodNutrients: foodNutrients ?? this.foodNutrients,
+            foodAttributes: foodAttributes ?? this.foodAttributes,
+            foodCode: foodCode ?? this.foodCode,
+            startDate: startDate ?? this.startDate,
+            endDate: endDate ?? this.endDate,
+            wweiaFoodCategory: wweiaFoodCategory ?? this.wweiaFoodCategory,
+            dataType: dataType ?? this.dataType,
+            fdcId: fdcId ?? this.fdcId,
+            foodPortions: foodPortions ?? this.foodPortions,
+            publicationDate: publicationDate ?? this.publicationDate,
+            inputFoods: inputFoods ?? this.inputFoods,
+        );
 
-  factory FoodData.fromMap(Map<String, dynamic> json) => FoodData(
-    wweiaFoodCategory: WweiaFoodCategory.fromMap(json["wweiaFoodCategory"]),
-    description: json["description"],
-    foodAttributes: List<FoodAttribute>.from(json["foodAttributes"].map((x) => FoodAttribute.fromMap(x))),
-    foodCode: json["foodCode"],
-    inputFoods: List<InputFood>.from(json["inputFoods"].map((x) => InputFood.fromMap(x))),
-    startDate: json["startDate"],
-    endDate: json["endDate"],
-    foodComponents: List<dynamic>.from(json["foodComponents"].map((x) => x)),
-    foodClass: json["foodClass"],
-    fdcId: json["fdcId"].toString(),
-    publicationDate: json["publicationDate"],
-    foodNutrients: List<FoodNutrient>.from(json["foodNutrients"].map((x) => FoodNutrient.fromMap(x))),
-    foodPortions: List<FoodPortion>.from(json["foodPortions"].map((x) => FoodPortion.fromMap(x))),
-    dataType: json["dataType"],
-  );
+    factory FoodData.fromJson(Map<String, dynamic> json) => FoodData(
+        foodClass: json["foodClass"],
+        description: json["description"],
+        foodNutrients: List<FoodNutrient>.from(json["foodNutrients"].map((x) => FoodNutrient.fromJson(x))),
+        foodAttributes: List<FoodAttribute>.from(json["foodAttributes"].map((x) => FoodAttribute.fromJson(x))),
+        foodCode: json["foodCode"],
+        startDate: json["startDate"],
+        endDate: json["endDate"],
+        wweiaFoodCategory: WweiaFoodCategory.fromJson(json["wweiaFoodCategory"]),
+        dataType: json["dataType"],
+        fdcId: json["fdcId"],
+        foodPortions: List<FoodPortion>.from(json["foodPortions"].map((x) => FoodPortion.fromJson(x))),
+        publicationDate: json["publicationDate"],
+        inputFoods: List<InputFood>.from(json["inputFoods"].map((x) => InputFood.fromJson(x))),
+    );
 
-  Map<String, dynamic> toMap() => {
-    "wweiaFoodCategory": wweiaFoodCategory!.toMap(),
-    "description": description,
-    "foodAttributes": List<dynamic>.from(foodAttributes!.map((x) => x.toMap())),
-    "foodCode": foodCode,
-    "inputFoods": List<dynamic>.from(inputFoods!.map((x) => x.toMap())),
-    "startDate": startDate,
-    "endDate": endDate,
-    "foodComponents": List<dynamic>.from(foodComponents!.map((x) => x)),
-    "foodClass": foodClass,
-    "fdcId": fdcId,
-    "publicationDate": publicationDate,
-    "foodNutrients": List<dynamic>.from(foodNutrients!.map((x) => x.toMap())),
-    "foodPortions": List<dynamic>.from(foodPortions!.map((x) => x.toMap())),
-    "dataType": dataType,
-  };
+    Map<String, dynamic> toJson() => {
+        "foodClass": foodClass,
+        "description": description,
+        "foodNutrients": List<dynamic>.from(foodNutrients!.map((x) => x.toJson())),
+        "foodAttributes": List<dynamic>.from(foodAttributes!.map((x) => x.toJson())),
+        "foodCode": foodCode,
+        "startDate": startDate,
+        "endDate": endDate,
+        "wweiaFoodCategory": wweiaFoodCategory?.toJson(),
+        "dataType": dataType,
+        "fdcId": fdcId,
+        "foodPortions": List<dynamic>.from(foodPortions!.map((x) => x.toJson())),
+        "publicationDate": publicationDate,
+        "inputFoods": List<dynamic>.from(inputFoods!.map((x) => x.toJson())),
+    };
 }
 
 class FoodAttribute {
-  FoodAttribute({
-    this.id,
-    this.value,
-    this.name,
-    this.foodAttributeType,
-  });
+    FoodAttribute({
+        this.id,
+        this.name,
+        this.value,
+        this.foodAttributeType,
+        this.rank,
+    });
 
-  int? id;
-  String? value;
-  String? name;
-  FoodAttributeType? foodAttributeType;
+    int? id;
+    String? name;
+    String? value;
+    FoodAttributeType? foodAttributeType;
+    int? rank;
 
-  FoodAttribute copyWith({
-    int? id,
-    String? value,
-    String? name,
-    FoodAttributeType? foodAttributeType,
-  }) =>
-      FoodAttribute(
-        id: id ?? this.id,
-        value: value ?? this.value,
-        name: name ?? this.name,
-        foodAttributeType: foodAttributeType ?? this.foodAttributeType,
-      );
+    FoodAttribute copyWith({
+        int? id,
+        String? name,
+        String? value,
+        FoodAttributeType? foodAttributeType,
+        int? rank,
+    }) => 
+        FoodAttribute(
+            id: id ?? this.id,
+            name: name ?? this.name,
+            value: value ?? this.value,
+            foodAttributeType: foodAttributeType ?? this.foodAttributeType,
+            rank: rank ?? this.rank,
+        );
 
-  factory FoodAttribute.fromMap(Map<String, dynamic> json) => FoodAttribute(
-    id: json["id"],
-    value: json["value"],
-    name: json["name"],
-    foodAttributeType: FoodAttributeType.fromMap(json["foodAttributeType"]),
-  );
+    factory FoodAttribute.fromJson(Map<String, dynamic> json) => FoodAttribute(
+        id: json["id"],
+        name: json["name"],
+        value: json["value"],
+        foodAttributeType: FoodAttributeType.fromJson(json["foodAttributeType"]),
+        rank: json["rank"],
+    );
 
-  Map<String, dynamic> toMap() => {
-    "id": id,
-    "value": value,
-    "name": name,
-    "foodAttributeType": foodAttributeType!.toMap(),
-  };
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "value": value,
+        "foodAttributeType": foodAttributeType?.toJson(),
+        "rank": rank,
+    };
 }
 
 class FoodAttributeType {
-  FoodAttributeType({
-    this.id,
-    this.name,
-    this.description,
-  });
+    FoodAttributeType({
+        this.id,
+        this.name,
+        this.description,
+    });
 
-  int? id;
-  String? name;
-  String? description;
+    int? id;
+    String? name;
+    String? description;
 
-  FoodAttributeType copyWith({
-    int? id,
-    String? name,
-    String? description,
-  }) =>
-      FoodAttributeType(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        description: description ?? this.description,
-      );
+    FoodAttributeType copyWith({
+        int? id,
+        String? name,
+        String? description,
+    }) => 
+        FoodAttributeType(
+            id: id ?? this.id,
+            name: name ?? this.name,
+            description: description ?? this.description,
+        );
 
-  factory FoodAttributeType.fromMap(Map<String, dynamic> json) => FoodAttributeType(
-    id: json["id"],
-    name: json["name"],
-    description: json["description"],
-  );
+    factory FoodAttributeType.fromJson(Map<String, dynamic> json) => FoodAttributeType(
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+    );
 
-  Map<String, dynamic> toMap() => {
-    "id": id,
-    "name": name,
-    "description": description,
-  };
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+    };
 }
 
 class FoodNutrient {
-  FoodNutrient({
-    this.nutrient,
-    this.type,
-    this.id,
-    this.amount,
-  });
+    FoodNutrient({
+        this.type,
+        this.id,
+        this.nutrient,
+        this.amount,
+    });
 
-  Nutrient? nutrient;
-  Type? type;
-  int? id;
-  double? amount;
+    Type? type;
+    int? id;
+    Nutrient? nutrient;
+    double? amount;
 
-  FoodNutrient copyWith({
-    Nutrient? nutrient,
-    Type? type,
-    int? id,
-    double? amount,
-  }) =>
-      FoodNutrient(
-        nutrient: nutrient ?? this.nutrient,
-        type: type ?? this.type,
-        id: id ?? this.id,
-        amount: amount ?? this.amount,
-      );
+    FoodNutrient copyWith({
+        Type? type,
+        int? id,
+        Nutrient? nutrient,
+        double? amount,
+    }) => 
+        FoodNutrient(
+            type: type ?? this.type,
+            id: id ?? this.id,
+            nutrient: nutrient ?? this.nutrient,
+            amount: amount ?? this.amount,
+        );
 
-  factory FoodNutrient.fromMap(Map<String, dynamic> json) => FoodNutrient(
-    nutrient: Nutrient.fromMap(json["nutrient"]),
-    type: typeValues.map[json["type"]],
-    id: json["id"] == null ? null : json["id"],
-    amount: json["amount"] == null ? null : json["amount"].toDouble(),
-  );
+    factory FoodNutrient.fromJson(Map<String, dynamic> json) => FoodNutrient(
+        type: typeValues.map[json["type"]],
+        id: json["id"],
+        nutrient: Nutrient.fromJson(json["nutrient"]),
+        amount: json["amount"].toDouble(),
+    );
 
-  Map<String, dynamic> toMap() => {
-    "nutrient": nutrient!.toMap(),
-    "type": typeValues.reverse![type!],
-    "id": id == null ? null : id,
-    "amount": amount == null ? null : amount,
-  };
+    Map<String, dynamic> toJson() => {
+        "type": typeValues.reverse[type],
+        "id": id,
+        "nutrient": nutrient?.toJson(),
+        "amount": amount,
+    };
 }
 
 class Nutrient {
-  Nutrient({
-    this.id,
-    this.number,
-    this.name,
-    this.rank,
-    this.unitName,
-  });
+    Nutrient({
+        this.id,
+        this.number,
+        this.name,
+        this.rank,
+        this.unitName,
+    });
 
-  int? id;
-  String? number;
-  String? name;
-  String? rank;
-  String? unitName;
+    int? id;
+    String? number;
+    String? name;
+    int? rank;
+    UnitName? unitName;
 
-  Nutrient copyWith({
-    int? id,
-    String? number,
-    String? name,
-    String? rank,
-    UnitName? unitName,
-  }) =>
-      Nutrient(
-        id: id ?? this.id,
-        number: number ?? this.number,
-        name: name ?? this.name,
-        rank: rank ?? this.rank,
-        unitName: unitName as String? ?? this.unitName,
-      );
+    Nutrient copyWith({
+        int? id,
+        String? number,
+        String? name,
+        int? rank,
+        UnitName? unitName,
+    }) => 
+        Nutrient(
+            id: id ?? this.id,
+            number: number ?? this.number,
+            name: name ?? this.name,
+            rank: rank ?? this.rank,
+            unitName: unitName ?? this.unitName,
+        );
 
-  factory Nutrient.fromMap(Map<String, dynamic> json) => Nutrient(
-    id: json["id"],
-    number: json["number"],
-    name: json["name"],
-    rank: json["rank"].toString(),
-    unitName: json["unitName"],
-  );
+    factory Nutrient.fromJson(Map<String, dynamic> json) => Nutrient(
+        id: json["id"],
+        number: json["number"],
+        name: json["name"],
+        rank: json["rank"],
+        unitName: unitNameValues.map[json["unitName"]],
+    );
 
-  Map<String, dynamic> toMap() => {
-    "id": id,
-    "number": number,
-    "name": name,
-    "rank": rank,
-    "unitName": unitNameValues.reverse![unitName as UnitName],
-  };
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "number": number,
+        "name": name,
+        "rank": rank,
+        "unitName": unitNameValues.reverse[unitName],
+    };
 }
 
 enum UnitName { G, KCAL, MG, UNIT_NAME_G }
 
 final unitNameValues = EnumValues({
-  "g": UnitName.G,
-  "kcal": UnitName.KCAL,
-  "mg": UnitName.MG,
-  "µg": UnitName.UNIT_NAME_G
+    "g": UnitName.G,
+    "kcal": UnitName.KCAL,
+    "mg": UnitName.MG,
+    "µg": UnitName.UNIT_NAME_G
 });
 
 enum Type { FOOD_NUTRIENT }
 
 final typeValues = EnumValues({
-  "FoodNutrient": Type.FOOD_NUTRIENT
+    "FoodNutrient": Type.FOOD_NUTRIENT
 });
 
 class FoodPortion {
-  FoodPortion({
-    this.id,
-    this.portionDescription,
-    this.gramWeight,
-    this.sequenceNumber,
-    this.modifier,
-    this.measureUnit,
-  });
+    FoodPortion({
+        this.id,
+        this.measureUnit,
+        this.modifier,
+        this.gramWeight,
+        this.sequenceNumber,
+        this.portionDescription,
+    });
 
-  int? id;
-  String? portionDescription;
-  String? gramWeight;
-  String? sequenceNumber;
-  String? modifier;
-  MeasureUnit? measureUnit;
+    int? id;
+    MeasureUnit? measureUnit;
+    String? modifier;
+    int? gramWeight;
+    int? sequenceNumber;
+    String? portionDescription;
 
-  FoodPortion copyWith({
-    int? id,
-    String? portionDescription,
-    String? gramWeight,
-    String? sequenceNumber,
-    String? modifier,
-    MeasureUnit? measureUnit,
-  }) =>
-      FoodPortion(
-        id: id ?? this.id,
-        portionDescription: portionDescription ?? this.portionDescription,
-        gramWeight: gramWeight ?? this.gramWeight,
-        sequenceNumber: sequenceNumber ?? this.sequenceNumber,
-        modifier: modifier ?? this.modifier,
-        measureUnit: measureUnit ?? this.measureUnit,
-      );
+    FoodPortion copyWith({
+        int? id,
+        MeasureUnit? measureUnit,
+        String? modifier,
+        int? gramWeight,
+        int? sequenceNumber,
+        String? portionDescription,
+    }) => 
+        FoodPortion(
+            id: id ?? this.id,
+            measureUnit: measureUnit ?? this.measureUnit,
+            modifier: modifier ?? this.modifier,
+            gramWeight: gramWeight ?? this.gramWeight,
+            sequenceNumber: sequenceNumber ?? this.sequenceNumber,
+            portionDescription: portionDescription ?? this.portionDescription,
+        );
 
-  factory FoodPortion.fromMap(Map<String, dynamic> json) => FoodPortion(
-    id: json["id"],
-    portionDescription: json["portionDescription"],
-    gramWeight: json["gramWeight"].toString(),
-    sequenceNumber: json["sequenceNumber"].toString(),
-    modifier: json["modifier"],
-    measureUnit: MeasureUnit.fromMap(json["measureUnit"]),
-  );
+    factory FoodPortion.fromJson(Map<String, dynamic> json) => FoodPortion(
+        id: json["id"],
+        measureUnit: MeasureUnit.fromJson(json["measureUnit"]),
+        modifier: json["modifier"],
+        gramWeight: json["gramWeight"],
+        sequenceNumber: json["sequenceNumber"],
+        portionDescription: json["portionDescription"],
+    );
 
-  Map<String, dynamic> toMap() => {
-    "id": id,
-    "portionDescription": portionDescription,
-    "gramWeight": gramWeight,
-    "sequenceNumber": sequenceNumber,
-    "modifier": modifier,
-    "measureUnit": measureUnit!.toMap(),
-  };
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "measureUnit": measureUnit?.toJson(),
+        "modifier": modifier,
+        "gramWeight": gramWeight,
+        "sequenceNumber": sequenceNumber,
+        "portionDescription": portionDescription,
+    };
 }
 
 class MeasureUnit {
-  MeasureUnit({
-    this.id,
-    this.name,
-    this.abbreviation,
-  });
+    MeasureUnit({
+        this.id,
+        this.name,
+        this.abbreviation,
+    });
 
-  int? id;
-  String? name;
-  String? abbreviation;
+    int? id;
+    String? name;
+    String? abbreviation;
 
-  MeasureUnit copyWith({
-    int? id,
-    String? name,
-    String? abbreviation,
-  }) =>
-      MeasureUnit(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        abbreviation: abbreviation ?? this.abbreviation,
-      );
+    MeasureUnit copyWith({
+        int? id,
+        String? name,
+        String? abbreviation,
+    }) => 
+        MeasureUnit(
+            id: id ?? this.id,
+            name: name ?? this.name,
+            abbreviation: abbreviation ?? this.abbreviation,
+        );
 
-  factory MeasureUnit.fromMap(Map<String, dynamic> json) => MeasureUnit(
-    id: json["id"],
-    name: json["name"],
-    abbreviation: json["abbreviation"],
-  );
+    factory MeasureUnit.fromJson(Map<String, dynamic> json) => MeasureUnit(
+        id: json["id"],
+        name: json["name"],
+        abbreviation: json["abbreviation"],
+    );
 
-  Map<String, dynamic> toMap() => {
-    "id": id,
-    "name": name,
-    "abbreviation": abbreviation,
-  };
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "abbreviation": abbreviation,
+    };
 }
 
 class InputFood {
-  InputFood({
-    this.id,
-    this.foodDescription,
-    this.ingredientDescription,
-    this.ingredientWeight,
-    this.portionCode,
-    this.portionDescription,
-    this.sequenceNumber,
-    this.ingredientCode,
-    this.unit,
-    this.amount,
-  });
+    InputFood({
+        this.id,
+        this.unit,
+        this.portionDescription,
+        this.portionCode,
+        this.foodDescription,
+        this.sequenceNumber,
+        this.ingredientDescription,
+        this.ingredientWeight,
+        this.ingredientCode,
+        this.amount,
+    });
 
-  int? id;
-  String? foodDescription;
-  String? ingredientDescription;
-  String? ingredientWeight;
-  String? portionCode;
-  String? portionDescription;
-  String? sequenceNumber;
-  String? ingredientCode;
-  String? unit;
-  String? amount;
+    int? id;
+    String? unit;
+    String? portionDescription;
+    String? portionCode;
+    String? foodDescription;
+    int? sequenceNumber;
+    String? ingredientDescription;
+    int? ingredientWeight;
+    int? ingredientCode;
+    int? amount;
 
-  InputFood copyWith({
-    int? id,
-    String? foodDescription,
-    String? ingredientDescription,
-    String? ingredientWeight,
-    String? portionCode,
-    String? portionDescription,
-    String? sequenceNumber,
-    String? ingredientCode,
-    String? unit,
-    String? amount,
-  }) =>
-      InputFood(
-        id: id ?? this.id,
-        foodDescription: foodDescription ?? this.foodDescription,
-        ingredientDescription: ingredientDescription ?? this.ingredientDescription,
-        ingredientWeight: ingredientWeight ?? this.ingredientWeight,
-        portionCode: portionCode ?? this.portionCode,
-        portionDescription: portionDescription ?? this.portionDescription,
-        sequenceNumber: sequenceNumber ?? this.sequenceNumber,
-        ingredientCode: ingredientCode ?? this.ingredientCode,
-        unit: unit ?? this.unit,
-        amount: amount ?? this.amount,
-      );
+    InputFood copyWith({
+        int? id,
+        String? unit,
+        String? portionDescription,
+        String? portionCode,
+        String? foodDescription,
+        int? sequenceNumber,
+        String? ingredientDescription,
+        int? ingredientWeight,
+        int? ingredientCode,
+        int? amount,
+    }) => 
+        InputFood(
+            id: id ?? this.id,
+            unit: unit ?? this.unit,
+            portionDescription: portionDescription ?? this.portionDescription,
+            portionCode: portionCode ?? this.portionCode,
+            foodDescription: foodDescription ?? this.foodDescription,
+            sequenceNumber: sequenceNumber ?? this.sequenceNumber,
+            ingredientDescription: ingredientDescription ?? this.ingredientDescription,
+            ingredientWeight: ingredientWeight ?? this.ingredientWeight,
+            ingredientCode: ingredientCode ?? this.ingredientCode,
+            amount: amount ?? this.amount,
+        );
 
-  factory InputFood.fromMap(Map<String, dynamic> json) => InputFood(
-    id: json["id"],
-    foodDescription: json["foodDescription"],
-    ingredientDescription: json["ingredientDescription"],
-    ingredientWeight: json["ingredientWeight"].toString(),
-    portionCode: json["portionCode"],
-    portionDescription: json["portionDescription"],
-    sequenceNumber: json["sequenceNumber"].toString(),
-    ingredientCode: json["ingredientCode"].toString(),
-    unit: json["unit"],
-    amount: json["amount"].toString(),
-  );
+    factory InputFood.fromJson(Map<String, dynamic> json) => InputFood(
+        id: json["id"],
+        unit: json["unit"],
+        portionDescription: json["portionDescription"],
+        portionCode: json["portionCode"],
+        foodDescription: json["foodDescription"],
+        sequenceNumber: json["sequenceNumber"],
+        ingredientDescription: json["ingredientDescription"],
+        ingredientWeight: json["ingredientWeight"],
+        ingredientCode: json["ingredientCode"],
+        amount: json["amount"],
+    );
 
-  Map<String, dynamic> toMap() => {
-    "id": id,
-    "foodDescription": foodDescription,
-    "ingredientDescription": ingredientDescription,
-    "ingredientWeight": ingredientWeight,
-    "portionCode": portionCode,
-    "portionDescription": portionDescription,
-    "sequenceNumber": sequenceNumber,
-    "ingredientCode": ingredientCode,
-    "unit": unit,
-    "amount": amount,
-  };
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "unit": unit,
+        "portionDescription": portionDescription,
+        "portionCode": portionCode,
+        "foodDescription": foodDescription,
+        "sequenceNumber": sequenceNumber,
+        "ingredientDescription": ingredientDescription,
+        "ingredientWeight": ingredientWeight,
+        "ingredientCode": ingredientCode,
+        "amount": amount,
+    };
 }
 
 class WweiaFoodCategory {
-  WweiaFoodCategory({
-    this.wweiaFoodCategoryCode,
-    this.wweiaFoodCategoryDescription,
-  });
+    WweiaFoodCategory({
+        this.wweiaFoodCategoryCode,
+        this.wweiaFoodCategoryDescription,
+    });
 
-  int? wweiaFoodCategoryCode;
-  String? wweiaFoodCategoryDescription;
+    int? wweiaFoodCategoryCode;
+    String? wweiaFoodCategoryDescription;
 
-  WweiaFoodCategory copyWith({
-    int? wweiaFoodCategoryCode,
-    String? wweiaFoodCategoryDescription,
-  }) =>
-      WweiaFoodCategory(
-        wweiaFoodCategoryCode: wweiaFoodCategoryCode ?? this.wweiaFoodCategoryCode,
-        wweiaFoodCategoryDescription: wweiaFoodCategoryDescription ?? this.wweiaFoodCategoryDescription,
-      );
+    WweiaFoodCategory copyWith({
+        int? wweiaFoodCategoryCode,
+        String? wweiaFoodCategoryDescription,
+    }) => 
+        WweiaFoodCategory(
+            wweiaFoodCategoryCode: wweiaFoodCategoryCode ?? this.wweiaFoodCategoryCode,
+            wweiaFoodCategoryDescription: wweiaFoodCategoryDescription ?? this.wweiaFoodCategoryDescription,
+        );
 
-  factory WweiaFoodCategory.fromMap(Map<String, dynamic> json) => WweiaFoodCategory(
-    wweiaFoodCategoryCode: json["wweiaFoodCategoryCode"],
-    wweiaFoodCategoryDescription: json["wweiaFoodCategoryDescription"],
-  );
+    factory WweiaFoodCategory.fromJson(Map<String, dynamic> json) => WweiaFoodCategory(
+        wweiaFoodCategoryCode: json["wweiaFoodCategoryCode"],
+        wweiaFoodCategoryDescription: json["wweiaFoodCategoryDescription"],
+    );
 
-  Map<String, dynamic> toMap() => {
-    "wweiaFoodCategoryCode": wweiaFoodCategoryCode,
-    "wweiaFoodCategoryDescription": wweiaFoodCategoryDescription,
-  };
+    Map<String, dynamic> toJson() => {
+        "wweiaFoodCategoryCode": wweiaFoodCategoryCode,
+        "wweiaFoodCategoryDescription": wweiaFoodCategoryDescription,
+    };
 }
 
 class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String>? reverseMap;
+    Map<String, T> map;
+    late Map<T, String> reverseMap;
 
-  EnumValues(this.map);
+    EnumValues(this.map);
 
-  Map<T, String>? get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => new MapEntry(v, k));
+    Map<T, String> get reverse {
+        reverseMap = map.map((k, v) => MapEntry(v, k));
+        return reverseMap;
     }
-    return reverseMap;
-  }
 }
