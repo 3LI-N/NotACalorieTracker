@@ -239,7 +239,7 @@ class Nutrient {
     String? number;
     String? name;
     int? rank;
-    UnitName? unitName;
+    String? unitName;
 
     Nutrient copyWith({
         int? id,
@@ -253,7 +253,7 @@ class Nutrient {
             number: number ?? this.number,
             name: name ?? this.name,
             rank: rank ?? this.rank,
-            unitName: unitName ?? this.unitName,
+            unitName: unitName as String? ?? this.unitName,
         );
 
     factory Nutrient.fromJson(Map<String, dynamic> json) => Nutrient(
@@ -261,7 +261,7 @@ class Nutrient {
         number: json["number"],
         name: json["name"],
         rank: json["rank"],
-        unitName: unitNameValues.map[json["unitName"]],
+        unitName: json["unitName"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -301,7 +301,7 @@ class FoodPortion {
     int? id;
     MeasureUnit? measureUnit;
     String? modifier;
-    int? gramWeight;
+    double? gramWeight;
     int? sequenceNumber;
     String? portionDescription;
 
@@ -309,7 +309,7 @@ class FoodPortion {
         int? id,
         MeasureUnit? measureUnit,
         String? modifier,
-        int? gramWeight,
+        double? gramWeight,
         int? sequenceNumber,
         String? portionDescription,
     }) => 
@@ -326,7 +326,7 @@ class FoodPortion {
         id: json["id"],
         measureUnit: MeasureUnit.fromJson(json["measureUnit"]),
         modifier: json["modifier"],
-        gramWeight: json["gramWeight"],
+        gramWeight: json["gramWeight"].toDouble(),
         sequenceNumber: json["sequenceNumber"],
         portionDescription: json["portionDescription"],
     );
@@ -397,9 +397,9 @@ class InputFood {
     String? foodDescription;
     int? sequenceNumber;
     String? ingredientDescription;
-    int? ingredientWeight;
+    double? ingredientWeight;
     int? ingredientCode;
-    int? amount;
+    double? amount;
 
     InputFood copyWith({
         int? id,
@@ -409,9 +409,9 @@ class InputFood {
         String? foodDescription,
         int? sequenceNumber,
         String? ingredientDescription,
-        int? ingredientWeight,
+        double? ingredientWeight,
         int? ingredientCode,
-        int? amount,
+        double? amount,
     }) => 
         InputFood(
             id: id ?? this.id,
@@ -434,9 +434,9 @@ class InputFood {
         foodDescription: json["foodDescription"],
         sequenceNumber: json["sequenceNumber"],
         ingredientDescription: json["ingredientDescription"],
-        ingredientWeight: json["ingredientWeight"],
+        ingredientWeight: json["ingredientWeight"].toDouble(),
         ingredientCode: json["ingredientCode"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
     );
 
     Map<String, dynamic> toJson() => {
