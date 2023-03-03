@@ -190,25 +190,25 @@ class FoodNutrient {
         this.type,
         this.id,
         this.nutrient,
-        this.amount,
+        required this.amount,
     });
 
     Type? type;
     int? id;
     Nutrient? nutrient;
-    double? amount;
+    double amount;
 
     FoodNutrient copyWith({
         Type? type,
         int? id,
         Nutrient? nutrient,
-        double? amount,
+        required double amount,
     }) => 
         FoodNutrient(
             type: type ?? this.type,
             id: id ?? this.id,
             nutrient: nutrient ?? this.nutrient,
-            amount: amount ?? this.amount,
+            amount: amount,
         );
 
     factory FoodNutrient.fromJson(Map<String, dynamic> json) => FoodNutrient(

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'models/foodmodel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+import 'package:provider/provider.dart';
+import 'provider/nutrient_provider.dart';
 
 class DetailScreen extends StatefulWidget {
   final int id;
@@ -39,6 +41,8 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var nutrientState = context.watch<NutrientProvider>();
+
     return Scaffold(
       appBar: AppBar(
         title: loading
@@ -105,7 +109,14 @@ class _DetailScreenState extends State<DetailScreen> {
                             );
                           }),
                     ),
-                  )
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      nutrientState.addWater(foodData.foodNutrients![5].amount);
+                      print(nutrientState.getWaterAmt);
+                    },
+                    child: Text('Add Food Item'),
+                  ),
                 ],
               ),
       ),
