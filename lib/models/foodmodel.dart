@@ -230,16 +230,16 @@ class Nutrient {
     Nutrient({
         this.id,
         this.number,
-        this.name,
+        required this.name,
         this.rank,
-        this.unitName,
+        required this.unitName,
     });
 
     int? id;
     String? number;
-    String? name;
+    String name;
     int? rank;
-    String? unitName;
+    String unitName;
 
     Nutrient copyWith({
         int? id,
@@ -273,13 +273,14 @@ class Nutrient {
     };
 }
 
-enum UnitName { G, KCAL, MG, UNIT_NAME_G }
+enum UnitName { G, KCAL, MG, UNIT_NAME_G, INIT }
 
 final unitNameValues = EnumValues({
     "g": UnitName.G,
     "kcal": UnitName.KCAL,
     "mg": UnitName.MG,
-    "µg": UnitName.UNIT_NAME_G
+    "µg": UnitName.UNIT_NAME_G,
+    "": UnitName.INIT,
 });
 
 enum Type { FOOD_NUTRIENT }

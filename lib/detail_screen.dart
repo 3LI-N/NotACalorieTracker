@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:provider/provider.dart';
 import 'provider/nutrient_provider.dart';
+import 'models/usernutrientmodel.dart';
 
 class DetailScreen extends StatefulWidget {
   final int id;
@@ -112,10 +113,11 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      nutrientState.addWater(foodData.foodNutrients![5].amount);
-                      print(nutrientState.getWaterAmt);
+                      List<UserNutrient> userNutrients = List.generate(foodData.foodNutrients!.length, (index) => UserNutrient(name: foodData.foodNutrients![index].nutrient!.name, amount: foodData.foodNutrients![index].amount, unitName: foodData.foodNutrients![index].nutrient!.unitName == 'g' ? UnitName.G : foodData.foodNutrients![index].nutrient!.unitName == 'kcal' ? UnitName.KCAL : foodData.foodNutrients![index].nutrient!.unitName == 'mg' ? UnitName.MG : UnitName.UNIT_NAME_G));
+                      nutrientState.addFood(userNutrients);
+                      print(nutrientState.getUserData.nutrientList["Protein"]);
                     },
-                    child: Text('Add Food Item'),
+                    child: Text('Add Food'),
                   ),
                 ],
               ),
