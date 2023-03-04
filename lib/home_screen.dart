@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_nutrient_app/user_profile.dart';
 import '/foodlist.dart';
 
 import 'detail_screen.dart';
@@ -31,6 +32,37 @@ class _HomeScreenState extends State<HomeScreen> {
           "Food Nutrients",
           style: TextStyle(fontSize: 28),
         ),
+        actions: [
+          PopupMenuButton<int>(
+            itemBuilder: (context) => [
+              // PopupMenuItem 1
+              PopupMenuItem(
+                value: 1,
+                // row with 2 children
+                child: Row(
+                  children: [
+                    Icon(Icons.star),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text("User Data")
+                  ],
+                ),
+              ),
+            ],
+            offset: Offset(0, 100),
+            color: Colors.grey,
+            elevation: 2,
+            // on selected we show the dialog box
+            onSelected: (value) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => UserProfile()),
+              );
+            },
+          ),
+        ],
       ),
       body: ListView.builder(
           itemCount: _foodList.length,
