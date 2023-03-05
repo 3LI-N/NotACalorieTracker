@@ -113,9 +113,8 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      List<UserNutrient> userNutrients = List.generate(foodData.foodNutrients!.length, (index) => UserNutrient(name: foodData.foodNutrients![index].nutrient!.name, amount: foodData.foodNutrients![index].amount, unitName: foodData.foodNutrients![index].nutrient!.unitName == 'g' ? UnitName.G : foodData.foodNutrients![index].nutrient!.unitName == 'kcal' ? UnitName.KCAL : foodData.foodNutrients![index].nutrient!.unitName == 'mg' ? UnitName.MG : UnitName.UNIT_NAME_G));
+                      List<UserNutrient> userNutrients = List.generate(foodData.foodNutrients!.length, (index) => UserNutrient(name: foodData.foodNutrients![index].nutrient!.name, amount: foodData.foodNutrients![index].amount, unitName: foodData.foodNutrients![index].nutrient!.unitName));
                       nutrientState.addFood(userNutrients);
-                      print(nutrientState.getUserData.nutrientList["Protein"]);
                     },
                     child: Text('Add Food'),
                   ),

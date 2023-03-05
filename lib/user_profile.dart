@@ -16,7 +16,7 @@ class _UserProfileState extends State<UserProfile>{
   @override
   Widget build(BuildContext context) {
     var nutrientState = context.watch<NutrientProvider>();
-    var _UserNutrients = nutrientState.getUserData.nutrientList;
+    var userNutrients = nutrientState.getUserData.nutrientList; // map with string as key and UserNutrient as value
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -24,39 +24,44 @@ class _UserProfileState extends State<UserProfile>{
           style: TextStyle(fontSize: 28),
         ),
       ),
-      body: ListView.builder(
-          itemCount: _UserNutrients.length,
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DetailScreen(_UserNutrients[index].id)),
-                );
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${_UserNutrients[index].name}",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black54),
+      body: Column(
+                children: [
+                  Container(
+                    child: Expanded(
+                      child: ListView.builder(
+                          itemCount: userNutrients.length,
+                          itemBuilder: (context, index) {
+                            String key = userNutrients.keys.elementAt(index);
+                            UserNutrient nutrient = userNutrients[key];
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: FittedBox(
+                                    alignment: Alignment.topLeft,
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      "${nutrient.name}:   ${nutrient.amount} ${nutrient.unitName}",
+                                      style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 1,
+                                  color: Colors.black54,
+                                ),
+                              ],
+                            );
+                          }),
                     ),
-                    Text(
-                      "${_UserNutrients[index].foodCategory}",
-                      style: TextStyle(fontSize: 16, color: Colors.black38),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            );
-          }),
     );
   }
 }

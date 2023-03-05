@@ -16,7 +16,7 @@ class UserNutrient {
 
   String name;
   double amount;
-  UnitName unitName;
+  String unitName;
 }
 
 
