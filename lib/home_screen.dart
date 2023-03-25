@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Icon customIcon = const Icon(Icons.search);
   Widget customSearchBar = const Text('Search foods');
+  String searchString = "";
 
   @override
   Widget build(BuildContext context) {
@@ -66,87 +67,67 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          AppBar(
-            backgroundColor: Colors.purple,
-            title: customSearchBar,
-            automaticallyImplyLeading: false,
-            actions: [
-              IconButton(
-                onPressed: () {
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: TextField(
+                onChanged: (value) {
                   setState(() {
-                    if (customIcon.icon == Icons.search) {
-                      customIcon = const Icon(Icons.cancel);
-                      customSearchBar = const ListTile(
-                        leading: Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                        title: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'type in journal name...',
-                            hintStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            border: InputBorder.none,
-                          ),
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      );
-                    } else {
-                      customIcon = const Icon(Icons.search);
-                      customSearchBar = const Text('Search foods');
-                    }
+                    searchString = value.toLowerCase();
                   });
                 },
-                icon: customIcon,
-              )
-            ],
-            centerTitle: true,
-          ),
-          ListView.builder(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: _foodList.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              DetailScreen(_foodList[index].id)),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${_foodList[index].name}",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black54),
-                        ),
-                        Text(
-                          "${_foodList[index].foodCategory}",
-                          style: TextStyle(fontSize: 16, color: Colors.black38),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }),
-        ],
+                decoration: InputDecoration(
+                    labelText: 'Search', suffixIcon: Icon(Icons.search)),
+              ),
+            ),
+            SizedBox(height: 10),
+            ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: _foodList.length,
+                itemBuilder: (context, index) {
+                  return _foodList[index]
+                          .name
+                          .toLowerCase()
+                          .contains(searchString)
+                      ? InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailScreen(_foodList[index].id)),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${_foodList[index].name}",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black54),
+                                ),
+                                Text(
+                                  "${_foodList[index].foodCategory}",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black38),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : Container();
+                }),
+          ],
+        ),
       ),
     );
   }
