@@ -68,73 +68,74 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: TextField(
-                onChanged: (value) {
-                  setState(() {
-                    searchString = value.toLowerCase();
-                  });
-                },
-                decoration: InputDecoration(
-                    labelText: 'Search', suffixIcon: Icon(Icons.search)),
-              ),
+      body: Column(
+        children: [
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  searchString = value.toLowerCase();
+                });
+              },
+              decoration: InputDecoration(
+                  labelText: 'Search', suffixIcon: Icon(Icons.search)),
             ),
-            SizedBox(height: 10),
-            foodData == null
-                ? const Center(
-                    child: CircularProgressIndicator(
-                    color: Colors.black,
-                  ))
-                : ListView.builder(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: foodData!.length,
-                    itemBuilder: (context, index) {
-                      return index > 0 &&
-                              foodData![index][2]
-                                  .toLowerCase()
-                                  .contains(searchString)
-                          ? InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DetailScreen(
-                                          int.parse(foodData![index][0]))),
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${foodData![index][2]}",
+          ),
+          SizedBox(height: 10),
+          foodData == null
+              ? const Center(
+                  child: CircularProgressIndicator(
+                  color: Colors.black,
+                ))
+              : Expanded(
+                  child: ListView.builder(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: foodData!.length,
+                      itemBuilder: (context, index) {
+                        return index > 0 &&
+                                foodData![index][2]
+                                    .toLowerCase()
+                                    .contains(searchString)
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DetailScreen(
+                                            int.parse(foodData![index][0]))),
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${foodData![index][2]}",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black54),
+                                      ),
+                                      /*Text(
+                                      "${_foodList[index].foodCategory}",
                                       style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black54),
-                                    ),
-                                    /*Text(
-                                    "${_foodList[index].foodCategory}",
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.black38),
-                                  ),*/
-                                  ],
+                                          fontSize: 16, color: Colors.black38),
+                                    ),*/
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )
-                          : Container();
-                    }),
-          ],
-        ),
+                              )
+                            : Container();
+                      }),
+                ),
+        ],
       ),
     );
   }
