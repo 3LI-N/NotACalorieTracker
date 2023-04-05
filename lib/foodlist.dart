@@ -50,6 +50,11 @@ class FoodList {
         id: 2344711,
         name: 'Apple',
         foodCategory: 'Fruit',
+      ),
+      FoodList(
+        id: 171606,
+        name: 'Fish broth',
+        foodCategory: 'Soup',
       )
     ];
   }

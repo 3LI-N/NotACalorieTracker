@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'models/foodmodel.dart';
+import 'package:flutter_nutrient_app/models/legacyfoodmodel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:provider/provider.dart';
@@ -15,7 +16,8 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  late FoodData foodData;
+  //late FoodData foodData;
+  late dynamic foodData;
   bool loading = true;
   @override
   void initState() {
@@ -30,7 +32,11 @@ class _DetailScreenState extends State<DetailScreen> {
     if (response.statusCode == 200) {
       var decodedResponse = convert.jsonDecode(response.body);
       print('===================$decodedResponse');
-      foodData = FoodData.fromJson(decodedResponse);
+      if (decodedResponse["dataType"] == "Survey (FNDDS)") {
+        foodData = FoodData.fromJson(decodedResponse);
+      } else if (decodedResponse["dataType"] == "SR Legacy") {
+        foodData = LegacyFoodData.fromJson(decodedResponse);
+      }
       print('===================$foodData');
       setState(() {
         loading = false;
@@ -113,7 +119,32 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      List<UserNutrient> userNutrients = List.generate(foodData.foodNutrients!.length, (index) => UserNutrient(name: foodData.foodNutrients![index].nutrient!.name, amount: foodData.foodNutrients![index].amount, unitName: foodData.foodNutrients![index].nutrient!.unitName));
+                      /*List<UserNutrient> userNutrients = List.generate(
+                          foodData.foodNutrients!.length,
+                          (index) => UserNutrient(
+                              name:
+                                  foodData.foodNutrients![index].nutrient!.name,
+                              amount: foodData.dataType == "SR Legacy"
+                                  ? foodData.foodNutrients![index]!.amount
+                                  : foodData
+                                      .foodNutrients![index].nutrient!.amount,
+                              unitName: foodData
+                                  .foodNutrients![index].nutrient!.unitName));*/
+                      List<UserNutrient> userNutrients = [];
+                      for (int i = 0; i < foodData.foodNutrients!.length; i++) {
+                        if (foodData.foodNutrients![i] != null) {
+                          if (foodData.dataType == "SR Legacy" &&
+                              foodData.foodNutrients![i]!.amount == null) {
+                            continue;
+                          }
+
+                          userNutrients.add(UserNutrient(
+                              name: foodData.foodNutrients![i].nutrient!.name,
+                              amount: foodData.foodNutrients![i]!.amount,
+                              unitName: foodData
+                                  .foodNutrients![i].nutrient!.unitName));
+                        }
+                      }
                       nutrientState.addFood(userNutrients);
                     },
                     child: Text('Add Food'),
