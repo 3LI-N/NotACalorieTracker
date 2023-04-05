@@ -78,12 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 onChanged: (value) {
                   setState(() {
                     searchString = value.toLowerCase();
-                    print("testing");
-                    if (foodData == null) {
-                      print("is null");
-                    } else {
-                      print(foodData!.length);
-                    }
                   });
                 },
                 decoration: InputDecoration(
@@ -97,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.black,
                   ))
                 : ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: foodData!.length,
@@ -128,10 +123,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           color: Colors.black54),
                                     ),
                                     /*Text(
-                                  "${_foodList[index].foodCategory}",
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.black38),
-                                ),*/
+                                    "${_foodList[index].foodCategory}",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black38),
+                                  ),*/
                                   ],
                                 ),
                               ),
