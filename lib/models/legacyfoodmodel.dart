@@ -48,8 +48,10 @@ class LegacyFoodData {
         publicationDate: json["publicationDate"],
         foodNutrients: List<FoodNutrient>.from(
             json["foodNutrients"].map((x) => FoodNutrient.fromJson(x))),
-        foodPortions: List<FoodPortion>.from(
-            json["foodPortions"].map((x) => FoodPortion.fromJson(x))),
+        foodPortions: json["foodPortions"] == null
+            ? []
+            : List<FoodPortion>.from(
+                json["foodPortions"].map((x) => FoodPortion.fromJson(x))),
         dataType: json["dataType"],
         foodClass: json["foodClass"],
         foodComponents:

@@ -49,6 +49,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   String dropdownValue = "";
   double portionMult = 1.0;
+  bool initialSetup = true;
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +57,16 @@ class _DetailScreenState extends State<DetailScreen> {
     var portionState = context.watch<PortionProvider>();
     List<List<dynamic>>? portions =
         portionState.getPortions(widget.id.toString());
-    if (portions!.isNotEmpty) {
-      portionMult = double.parse(portions[0][7]) / 100.0;
+    if (initialSetup) {
+      print("got to here");
+      if (portions!.isNotEmpty) {
+        print("now we're here");
+        portionMult = double.parse(portions[0][7]) / 100.0;
+        print(portionMult);
+      }
+      dropdownValue = portions.isNotEmpty ? portions[0][6] : "";
+      initialSetup = false;
     }
-    dropdownValue = portions.isNotEmpty ? portions[0][6] : null;
 
     return Scaffold(
       appBar: AppBar(
@@ -81,27 +88,27 @@ class _DetailScreenState extends State<DetailScreen> {
                     "Portion: per ${portionMult * 100}g",
                     style: TextStyle(fontSize: 25),
                   ),
-                  DropdownButtonFormField<String>(
-                      value: dropdownValue,
-                      icon: const Icon(Icons.keyboard_arrow_down),
-                      items: portions
-                          .map((e) => DropdownMenuItem<String>(
-                                value: e[6],
-                                child: Text(e[6]),
-                              ))
-                          .toList(),
-                      onChanged: (String? newValue) {
-                        dropdownValue = newValue!;
-                        for (var e in portions) {
-                          if (e[6] == dropdownValue) {
-                            portionMult = double.parse(e[7]) / 100.0;
-                          }
-                        }
-                        setState(() {
-                          dropdownValue;
-                          portionMult;
-                        });
-                      }),
+                  dropdownValue != ""
+                      ? DropdownButtonFormField<String>(
+                          value: dropdownValue,
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: portions!
+                              .map((e) => DropdownMenuItem<String>(
+                                    value: e[6],
+                                    child: Text(e[6]),
+                                  ))
+                              .toList(),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownValue = newValue!;
+                              for (var e in portions) {
+                                if (e[6] == dropdownValue) {
+                                  portionMult = double.parse(e[7]) / 100.0;
+                                }
+                              }
+                            });
+                          })
+                      : Container(),
                   Container(
                     child: Expanded(
                       child: ListView.builder(
@@ -158,7 +165,6 @@ class _DetailScreenState extends State<DetailScreen> {
                               foodData.foodNutrients![i]!.amount == null) {
                             continue;
                           }
-
                           userNutrients.add(UserNutrient(
                               name: foodData.foodNutrients![i].nutrient!.name,
                               amount: foodData.foodNutrients![i]!.amount *
