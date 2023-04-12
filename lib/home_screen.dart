@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_nutrient_app/user_profile.dart';
 import '/foodlist.dart';
 import 'package:csv/csv.dart';
+import 'provider/portion_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'detail_screen.dart';
 
@@ -14,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<List<dynamic>>? foodData;
+  List<List<dynamic>> foodPortions = [];
   var foodList = FoodList(
     name: '',
     foodCategory: '',
@@ -23,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _foodList = foodList.foodList();
-    loadAsset();
+    loadAssets();
     super.initState();
   }
 
@@ -31,6 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var portionState = context.watch<PortionProvider>();
+    if (foodPortions.isNotEmpty) {
+      portionState.setPortions(foodPortions);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -140,13 +148,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  loadAsset() async {
-    var myData = await DefaultAssetBundle.of(context).loadString(
+  loadAssets() async {
+    var foodCsvData = await DefaultAssetBundle.of(context).loadString(
       "assets/food.csv",
     );
-    List<List<dynamic>> csvTable = const CsvToListConverter().convert(myData);
+    List<List<dynamic>> foodCsvTable =
+        const CsvToListConverter().convert(foodCsvData);
+    var portionCsvData = await DefaultAssetBundle.of(context).loadString(
+      "assets/food_portion.csv",
+    );
+    List<List<dynamic>> portionCsvTable =
+        const CsvToListConverter().convert(portionCsvData);
     setState(() {
-      foodData = csvTable;
+      foodData = foodCsvTable;
+      foodPortions = portionCsvTable;
     });
   }
 }

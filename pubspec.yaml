@@ -63,6 +63,7 @@ flutter:
 
   assets:
     - assets/food.csv
+    - assets/food_portion.csv
 
   # To add assets to your application, add an assets section, like this:
   # assets:

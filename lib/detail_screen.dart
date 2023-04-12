@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:provider/provider.dart';
 import 'provider/nutrient_provider.dart';
+import 'provider/portion_provider.dart';
 import 'models/usernutrientmodel.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -46,9 +47,19 @@ class _DetailScreenState extends State<DetailScreen> {
     }
   }
 
+  String dropdownValue = "";
+  double portionMult = 1.0;
+
   @override
   Widget build(BuildContext context) {
     var nutrientState = context.watch<NutrientProvider>();
+    var portionState = context.watch<PortionProvider>();
+    List<List<dynamic>>? portions =
+        portionState.getPortions(widget.id.toString());
+    if (portions!.isNotEmpty) {
+      portionMult = double.parse(portions[0][7]) / 100.0;
+    }
+    dropdownValue = portions.isNotEmpty ? portions[0][6] : null;
 
     return Scaffold(
       appBar: AppBar(
@@ -67,9 +78,30 @@ class _DetailScreenState extends State<DetailScreen> {
             : Column(
                 children: [
                   Text(
-                    "Portion: per 100g",
+                    "Portion: per ${portionMult * 100}g",
                     style: TextStyle(fontSize: 25),
                   ),
+                  DropdownButtonFormField<String>(
+                      value: dropdownValue,
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      items: portions
+                          .map((e) => DropdownMenuItem<String>(
+                                value: e[6],
+                                child: Text(e[6]),
+                              ))
+                          .toList(),
+                      onChanged: (String? newValue) {
+                        dropdownValue = newValue!;
+                        for (var e in portions) {
+                          if (e[6] == dropdownValue) {
+                            portionMult = double.parse(e[7]) / 100.0;
+                          }
+                        }
+                        setState(() {
+                          dropdownValue;
+                          portionMult;
+                        });
+                      }),
                   Container(
                     child: Expanded(
                       child: ListView.builder(
@@ -92,7 +124,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                       foodData.foodNutrients![index].amount ==
                                               null
                                           ? " ${nutrient.name}: "
-                                          : "${nutrient.name}:   ${foodData.foodNutrients![index].amount} ${foodData.foodNutrients![index].amount == null ? "" : nutrient.unitName}",
+                                          : "${nutrient.name}:   ${foodData.foodNutrients![index].amount * portionMult} ${foodData.foodNutrients![index].amount == null ? "" : nutrient.unitName}",
                                       style: foodData.foodNutrients![index]
                                                   .amount ==
                                               null
@@ -119,17 +151,6 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      /*List<UserNutrient> userNutrients = List.generate(
-                          foodData.foodNutrients!.length,
-                          (index) => UserNutrient(
-                              name:
-                                  foodData.foodNutrients![index].nutrient!.name,
-                              amount: foodData.dataType == "SR Legacy"
-                                  ? foodData.foodNutrients![index]!.amount
-                                  : foodData
-                                      .foodNutrients![index].nutrient!.amount,
-                              unitName: foodData
-                                  .foodNutrients![index].nutrient!.unitName));*/
                       List<UserNutrient> userNutrients = [];
                       for (int i = 0; i < foodData.foodNutrients!.length; i++) {
                         if (foodData.foodNutrients![i] != null) {
@@ -140,7 +161,8 @@ class _DetailScreenState extends State<DetailScreen> {
 
                           userNutrients.add(UserNutrient(
                               name: foodData.foodNutrients![i].nutrient!.name,
-                              amount: foodData.foodNutrients![i]!.amount,
+                              amount: foodData.foodNutrients![i]!.amount *
+                                  portionMult,
                               unitName: foodData
                                   .foodNutrients![i].nutrient!.unitName));
                         }

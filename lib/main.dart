@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'home_screen.dart';
 import 'provider/nutrient_provider.dart';
+import 'provider/portion_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: NutrientProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: PortionProvider(),
         ),
       ],
       child: MaterialApp(
@@ -36,7 +40,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-
     return HomeScreen();
   }
 }
