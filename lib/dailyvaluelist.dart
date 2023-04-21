@@ -74,40 +74,10 @@ class NutrientDVList {
         unitName: "µg",
       ),
       NutrientDVList(
-        displayName: "Biotin",
-        usdaName: "",
-        dailyValue: 30,
-        unitName: "µg",
-      ),
-      NutrientDVList(
-        displayName: "Chloride",
-        usdaName: "",
-        dailyValue: 2300,
-        unitName: "mg",
-      ),
-      NutrientDVList(
-        displayName: "Chromium",
-        usdaName: "",
-        dailyValue: 35,
-        unitName: "µg",
-      ),
-      NutrientDVList(
         displayName: "Copper",
         usdaName: "Copper, Cu",
         dailyValue: 0.9,
         unitName: "mg",
-      ),
-      NutrientDVList(
-        displayName: "Folate/Folic Acid",
-        usdaName: "",
-        dailyValue: 400,
-        unitName: "µg",
-      ),
-      NutrientDVList(
-        displayName: "Molybdenum",
-        usdaName: "",
-        dailyValue: 45,
-        unitName: "µg",
       ),
       NutrientDVList(
         displayName: "Niacin",
@@ -188,12 +158,6 @@ class NutrientDVList {
         unitName: "mg",
       ),
       NutrientDVList(
-        displayName: "Iodine",
-        usdaName: "",
-        dailyValue: 150,
-        unitName: "µg",
-      ),
-      NutrientDVList(
         displayName: "Iron",
         usdaName: "Iron, Fe",
         dailyValue: 18,
@@ -209,12 +173,6 @@ class NutrientDVList {
         displayName: "Saturated fat",
         usdaName: "Fatty acids, total saturated",
         dailyValue: 20,
-        unitName: "g",
-      ),
-      NutrientDVList(
-        displayName: "Added sugars",
-        usdaName: "",
-        dailyValue: 50,
         unitName: "g",
       ),
       NutrientDVList(
