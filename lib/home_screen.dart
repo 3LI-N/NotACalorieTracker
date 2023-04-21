@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nutrient_app/user_profile.dart';
+import 'package:flutter_nutrient_app/user_visualisation.dart';
 import '/foodlist.dart';
 import 'package:csv/csv.dart';
 import 'provider/portion_provider.dart';
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onSelected: (value) {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => UserProfile()),
+                MaterialPageRoute(builder: (context) => UserVisualisation()),
               );
             },
           ),
