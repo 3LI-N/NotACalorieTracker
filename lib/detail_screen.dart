@@ -11,6 +11,7 @@ import 'models/usernutrientmodel.dart';
 
 class DetailScreen extends StatefulWidget {
   final int id;
+  final TextEditingController amtController = TextEditingController();
   DetailScreen(this.id);
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -22,8 +23,16 @@ class _DetailScreenState extends State<DetailScreen> {
   bool loading = true;
   @override
   void initState() {
+    widget.amtController.text = '1.0';
+    widget.amtController.addListener(_updateAmount);
     fetchData();
     super.initState();
+  }
+
+  void _updateAmount() {
+    setState(() {
+      widget.amtController.text;
+    });
   }
 
   Future<void> fetchData() async {
@@ -49,6 +58,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   String dropdownValue = "";
   double portionMult = 1.0;
+  double amtMult = 1.0;
   bool initialSetup = true;
 
   @override
@@ -58,11 +68,8 @@ class _DetailScreenState extends State<DetailScreen> {
     List<List<dynamic>>? portions =
         portionState.getPortions(widget.id.toString());
     if (initialSetup) {
-      print("got to here");
       if (portions!.isNotEmpty) {
-        print("now we're here");
         portionMult = double.parse(portions[0][7]) / 100.0;
-        print(portionMult);
       }
       dropdownValue = portions.isNotEmpty ? portions[0][6] : "";
       initialSetup = false;
@@ -85,8 +92,12 @@ class _DetailScreenState extends State<DetailScreen> {
             : Column(
                 children: [
                   Text(
-                    "Portion: per ${portionMult * 100}g",
+                    "Portion: per ${(widget.amtController.text.isEmpty ? 0 : double.parse(widget.amtController.text) * portionMult * 100).toStringAsFixed(3)}g",
                     style: TextStyle(fontSize: 25),
+                  ),
+                  TextFormField(
+                    controller: widget.amtController,
+                    keyboardType: TextInputType.number,
                   ),
                   dropdownValue != ""
                       ? DropdownButtonFormField<String>(
@@ -131,7 +142,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                       foodData.foodNutrients![index].amount ==
                                               null
                                           ? " ${nutrient.name}: "
-                                          : "${nutrient.name}:   ${foodData.foodNutrients![index].amount * portionMult} ${foodData.foodNutrients![index].amount == null ? "" : nutrient.unitName}",
+                                          : "${nutrient.name}:   ${(widget.amtController.text.isEmpty ? 0 : double.parse(widget.amtController.text) * foodData.foodNutrients![index].amount * portionMult).toStringAsFixed(3)} ${foodData.foodNutrients![index].amount == null ? "" : nutrient.unitName}",
                                       style: foodData.foodNutrients![index]
                                                   .amount ==
                                               null
@@ -167,8 +178,11 @@ class _DetailScreenState extends State<DetailScreen> {
                           }
                           userNutrients.add(UserNutrient(
                               name: foodData.foodNutrients![i].nutrient!.name,
-                              amount: foodData.foodNutrients![i]!.amount *
-                                  portionMult,
+                              amount: widget.amtController.text.isEmpty
+                                  ? 0
+                                  : double.parse(widget.amtController.text) *
+                                      foodData.foodNutrients![i]!.amount *
+                                      portionMult,
                               unitName: foodData
                                   .foodNutrients![i].nutrient!.unitName));
                         }
