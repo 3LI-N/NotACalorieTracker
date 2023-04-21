@@ -79,10 +79,11 @@ class _DetailScreenState extends State<DetailScreen> {
       appBar: AppBar(
         title: loading
             ? SizedBox.shrink()
-            : FittedBox(
+            : SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
                 child: Text(
                   "${foodData.description}",
-                  style: TextStyle(fontSize: 28),
+                  style: TextStyle(fontSize: 25),
                 ),
               ),
       ),
