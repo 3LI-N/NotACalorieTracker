@@ -95,36 +95,39 @@ class _UserVisualisationState extends State<UserVisualisation> {
                 return Wrap(
                   spacing: 10.0, // gap between adjacent chips
                   runSpacing: 8.0, // gap between lines
+                  alignment: WrapAlignment.center,
                   children: <Widget>[
                     CircularPercentIndicator(
-                      radius: 45.0,
-                      lineWidth: 4.0,
+                      radius: 50.0,
+                      lineWidth: 5.0,
                       animation: true,
                       percent: percentDV / 100,
-                      center: Text("${nutrient.displayName}"),
+                      center: Text("${nutrient.displayName}",
+                          textAlign: TextAlign.center),
                       //center: Text("${percentDV.toStringAsFixed(3)}"),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Colors.green,
+                      progressColor:
+                          overreccomendation ? Colors.red : Colors.green,
                       footer: overreccomendation
                           ? Text(
-                              "Over Recommended Daily Intake!",
+                              "\nOver Recommended Daily Intake! \n ${userNutrients[nutrient.usdaName]
+                                  .amount
+                                  .round()
+                                  .toString()}/ ${nutrient.dailyValue.round().toString()} ${nutrient.unitName}",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.red,
-                                  fontSize: 17.0),
+                                  fontSize: 14.0),
                             )
-                          : Text(''),
+                          : userNutrients.containsKey(nutrient.usdaName)
+                              ? Text('\n ${userNutrients[nutrient.usdaName]
+                                  .amount
+                                  .round()
+                                  .toString()}/ ${nutrient.dailyValue.round().toString()} ${nutrient.unitName}')
+                              : Text(
+                                  '0/${nutrient.dailyValue.round().toString()} ${nutrient.unitName}'),
                     ),
-                    //maybe add numbers and units
-                    userNutrients.containsKey(nutrient.usdaName)
-                        ? Text(userNutrients[nutrient.usdaName]
-                            .amount
-                            .round()
-                            .toString())
-                        : Text("0"),
-                    Text("/"),
-                    Text(nutrient.dailyValue.round().toString()),
-                    Text(nutrient.unitName),
                     // Text(userNutrients[nutrient.usdaName].unitName().toString())
                   ],
                 );
