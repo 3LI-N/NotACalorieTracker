@@ -124,6 +124,7 @@ class _UserVisualisationState extends State<UserVisualisation> {
                         : Text("0"),
                     Text("/"),
                     Text(nutrient.dailyValue.round().toString()),
+                    Text(nutrient.unitName),
                     // Text(userNutrients[nutrient.usdaName].unitName().toString())
                   ],
                 );
