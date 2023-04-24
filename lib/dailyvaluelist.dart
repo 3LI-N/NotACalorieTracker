@@ -11,7 +11,7 @@ class NutrientDVList {
     required this.unitName,
   });
 
-  List<NutrientDVList> nutrientDVList() {
+  List<NutrientDVList> nutrientDVList(plan) {
     //maybe add "plan" as argument to function later
     double calciumDV = 1300;
     double fiberDV = 28;
@@ -41,20 +41,19 @@ class NutrientDVList {
     double proteinDV = 50;
     double saturatedFatDV = 20;
     double cholineDV = 550;
-    String plan = "default";
-    if (plan == "heart") {
+    if (plan == "Heart") {
       cholesterolDV = 300 * 0.8;
-    } else if (plan == "blood pressure") {
+    } else if (plan == "Blood Pressure") {
       fatDV = 78 * 0.85;
       sodiumDV = 2300 * 0.8;
       carbohydrateDV = 275 * 0.9;
       cholesterolDV = 300 * 0.8;
       saturatedFatDV = 20 * 0.8;
-    } else if (plan == "bulk") {
+    } else if (plan == "Bulk") {
       fatDV = 78 * 1.1;
       carbohydrateDV = 275 * 1.2;
       proteinDV = 50 * 1.3;
-    } else if (plan == "brain") {
+    } else if (plan == "Brain") {
       fatDV = 78 * 1.1;
       saturatedFatDV = 20 * 1.1;
       vitaminKDV *= 1.15;
@@ -62,21 +61,12 @@ class NutrientDVList {
       magnesiumDV *= 1.15;
       copperDV *= 1.15;
       ironDV *= 1.15;
-    } else if (plan == "Erectile Dysfunction") {
-      vitaminDDV *= 1.2;
-      fatDV *= 0.9;
-      saturatedFatDV *= 0.9;
-    } else if (plan == "sex drive") {
-      magnesiumDV *= 1.1;
-      ironDV *= 1.1;
-      vitaminDDV *= 1.1;
-      zincDV *= 1.1;
-    } else if (plan == "energy") {
+    } else if (plan == "Energy") {
       pantothenicAcidDV *= 1.15;
       vitaminB6DV *= 1.15;
       vitaminB12DV *= 1.15;
       vitaminDDV *= 1.15;
-    } else if (plan == "metabolism") {
+    } else if (plan == "Metabolism") {
       vitaminB12DV *= 1.15;
       vitaminB6DV *= 1.15;
       niacinDV *= 1.15;
@@ -87,13 +77,22 @@ class NutrientDVList {
       calciumDV *= 1.1;
       ironDV *= 1.1;
       magnesiumDV *= 1.1;
-    } else if (plan == "immune system") {
+    } else if (plan == "Immune System") {
       vitaminCDV *= 1.15;
       vitaminEDV *= 1.15;
       vitaminADV *= 1.15;
       vitaminDDV *= 1.15;
       ironDV *= 1.1;
       seleniumDV *= 1.1;
+      zincDV *= 1.1;
+    } else if (plan == "Erectile Dysfunction") {
+      vitaminDDV *= 1.2;
+      fatDV *= 0.9;
+      saturatedFatDV *= 0.9;
+    } else if (plan == "Libido") {
+      magnesiumDV *= 1.1;
+      ironDV *= 1.1;
+      vitaminDDV *= 1.1;
       zincDV *= 1.1;
     }
 

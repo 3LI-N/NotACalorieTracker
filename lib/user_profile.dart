@@ -13,6 +13,20 @@ class UserProfile extends StatefulWidget {
   _UserProfileState createState() => _UserProfileState();
 }
 
+String dropdownValue = "default";
+
+List<DropdownMenuItem<String>> get dropdownItems {
+  List<DropdownMenuItem<String>> menuItems = [
+    DropdownMenuItem(child: Text("Default"), value: "Default"),
+    DropdownMenuItem(child: Text("Blood Pressure"), value: "Blood Pressure"),
+    DropdownMenuItem(child: Text("Brain"), value: "Brain"),
+    DropdownMenuItem(child: Text("Energy"), value: "Energy"),
+    DropdownMenuItem(child: Text("Metabolism"), value: "Metabolism"),
+    DropdownMenuItem(child: Text("Immune system"), value: "Immune System"),
+  ];
+  return dropdownItems;
+}
+
 class _UserProfileState extends State<UserProfile> {
   var nutrientDVList = NutrientDVList(
       displayName: '', usdaName: '', dailyValue: 0, unitName: '');
@@ -20,7 +34,7 @@ class _UserProfileState extends State<UserProfile> {
 
   @override
   void initState() {
-    _nutrientDVList = nutrientDVList.nutrientDVList();
+    _nutrientDVList = nutrientDVList.nutrientDVList("default");
     super.initState();
   }
 
@@ -36,8 +50,30 @@ class _UserProfileState extends State<UserProfile> {
           style: TextStyle(fontSize: 28),
         ),
       ),
+      // body: DropdownButton(
+      //   items:
+      //       <String>['Brain', 'Blood Pressure', 'Energy'].map((String value) {
+      //     return DropdownMenuItem<String>(
+      //       value: value,
+      //       child: Text(value),
+      //     );
+      //   }).toList(),
+      //   onChanged: (_) {},
+      // ),
       body: Column(
         children: [
+          // dropdownValue != "Default"
+          DropdownButton(
+            items: <String>['Brain', 'Blood Pressure', 'Energy']
+                .map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (_) {},
+          ),
+          // : Container(),
           Container(
             child: _nutrientDVList.isEmpty
                 ? const Center(
