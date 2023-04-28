@@ -43,31 +43,41 @@ class _UserVisualisationState extends State<UserVisualisation> {
         ),
       ),
       body: Column(children: [
-        DropdownButtonFormField<String>(
-          value: plan,
-          items: <String>[
-            'Default',
-            'Brain',
-            'Heart',
-            'Blood Pressure',
-            'Energy',
-            'Metabolism',
-            'Immune System',
-            'Libido',
-            'Erectile Dysfunction'
-          ].map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (String? newValue) {
-            setState(() {
-              plan = newValue.toString();
-              print(plan);
-              _nutrientDVList = nutrientDVList.nutrientDVList(plan);
-            });
-          },
+        Row(
+          children: [
+            SizedBox(
+              width: 40,
+            ),
+            Container(
+              width: 175,
+              child: DropdownButtonFormField<String>(
+                value: plan,
+                items: <String>[
+                  'Default',
+                  'Brain',
+                  'Heart',
+                  'Blood Pressure',
+                  'Energy',
+                  'Metabolism',
+                  'Immune System',
+                  'Libido',
+                  'Erectile Dysfunction'
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    plan = newValue.toString();
+                    print(plan);
+                    _nutrientDVList = nutrientDVList.nutrientDVList(plan);
+                  });
+                },
+              ),
+            ),
+          ],
         ),
         SizedBox(height: 30),
         Expanded(
