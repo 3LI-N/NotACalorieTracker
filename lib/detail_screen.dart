@@ -74,6 +74,7 @@ class _DetailScreenState extends State<DetailScreen> {
       dropdownValue = portions.isNotEmpty ? portions[0][6] : "";
       initialSetup = false;
     }
+    Color secondHeaderColor = Color.fromARGB(255, 219, 239, 255);
 
     return Scaffold(
       appBar: AppBar(
@@ -92,35 +93,74 @@ class _DetailScreenState extends State<DetailScreen> {
             ? Center(child: CircularProgressIndicator())
             : Column(
                 children: [
-                  Text(
-                    "Portion: per ${(widget.amtController.text.isEmpty ? 0 : double.parse(widget.amtController.text) * portionMult * 100).toStringAsFixed(3)}g",
-                    style: TextStyle(fontSize: 25),
+                  Container(
+                    color: secondHeaderColor,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Selected Portion Weight: ${(widget.amtController.text.isEmpty ? 0 : double.parse(widget.amtController.text) * portionMult * 100).toStringAsFixed(3)}g",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Divider(
+                          color: Color.fromARGB(136, 118, 118, 118),
+                          thickness: 2,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 50,
+                            ),
+                            SizedBox(
+                              width: 50,
+                              child: TextFormField(
+                                controller: widget.amtController,
+                                keyboardType: TextInputType.number,
+                              ),
+                            ),
+                            Container(
+                              width: 250,
+                              child: dropdownValue != ""
+                                  ? DropdownButtonFormField<String>(
+                                      isExpanded: true,
+                                      value: dropdownValue,
+                                      icon:
+                                          const Icon(Icons.keyboard_arrow_down),
+                                      items: portions!
+                                          .map((e) => DropdownMenuItem<String>(
+                                                value: e[6],
+                                                child: Text(e[6]),
+                                              ))
+                                          .toList(),
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          dropdownValue = newValue!;
+                                          for (var e in portions) {
+                                            if (e[6] == dropdownValue) {
+                                              portionMult =
+                                                  double.parse(e[7]) / 100.0;
+                                            }
+                                          }
+                                        });
+                                      })
+                                  : Text(
+                                      "100g of item",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    ),
                   ),
-                  TextFormField(
-                    controller: widget.amtController,
-                    keyboardType: TextInputType.number,
-                  ),
-                  dropdownValue != ""
-                      ? DropdownButtonFormField<String>(
-                          value: dropdownValue,
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          items: portions!
-                              .map((e) => DropdownMenuItem<String>(
-                                    value: e[6],
-                                    child: Text(e[6]),
-                                  ))
-                              .toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropdownValue = newValue!;
-                              for (var e in portions) {
-                                if (e[6] == dropdownValue) {
-                                  portionMult = double.parse(e[7]) / 100.0;
-                                }
-                              }
-                            });
-                          })
-                      : Container(),
                   Container(
                     child: Expanded(
                       child: ListView.builder(
