@@ -76,10 +76,7 @@ class _UserProfileState extends State<UserProfile> {
           // : Container(),
           Container(
             child: _nutrientDVList.isEmpty
-                ? const Center(
-                    child: CircularProgressIndicator(
-                    color: Colors.black,
-                  ))
+                ? const Center(child: CircularProgressIndicator())
                 : Expanded(
                     child: ListView.builder(
                         itemCount:

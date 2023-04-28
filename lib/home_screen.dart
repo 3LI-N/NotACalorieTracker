@@ -94,10 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(height: 10),
           foodData == null
-              ? const Center(
-                  child: CircularProgressIndicator(
-                  color: Colors.black,
-                ))
+              ? const Center(child: CircularProgressIndicator())
               : Expanded(
                   child: ListView.builder(
                       physics: const AlwaysScrollableScrollPhysics(),

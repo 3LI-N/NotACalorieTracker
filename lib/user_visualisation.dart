@@ -9,6 +9,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'detail_screen.dart';
 
 String plan = "Default";
+String showNutrientNotice = "";
 
 class UserVisualisation extends StatefulWidget {
   const UserVisualisation({Key? key}) : super(key: key);
@@ -81,52 +82,93 @@ class _UserVisualisationState extends State<UserVisualisation> {
                 //UserNutrient nutrient = userNutrients[key];
                 NutrientDVList nutrient = _nutrientDVList[index];
                 double percentDV = 0.0;
-                bool overreccomendation = false;
+                Color progressColor = Color.fromARGB(255, 116, 234, 120);
+                Color backgroundColor = Color.fromARGB(255, 189, 189, 189);
+                Color textColor = Colors.green;
+                double largeDerivation = 25;
+                double smallDerivation = 10;
+                String notice = "Achieved recommended daily intake!";
                 if (userNutrients.containsKey(nutrient.usdaName) &&
                     userNutrients[nutrient.usdaName] != null) {
                   percentDV = userNutrients[nutrient.usdaName].amount *
                       100 /
                       nutrient.dailyValue;
-                  if ((percentDV / 100) > 1.0) {
+                }
+                if (percentDV > 100 + largeDerivation ||
+                    percentDV < 100 - largeDerivation) {
+                  textColor = Colors.red;
+                  progressColor = Color.fromARGB(255, 245, 137, 130);
+                  notice = "Below recommended daily intake!";
+                  if (percentDV > 100) {
+                    notice = "Above recommended daily intake!";
+                    backgroundColor = progressColor;
+                    progressColor = Color.fromARGB(255, 175, 17, 6);
+                  }
+                } else if (percentDV > 100 + smallDerivation ||
+                    percentDV < 100 - smallDerivation) {
+                  textColor = Colors.orange;
+                  progressColor = Color.fromARGB(255, 252, 197, 115);
+                  notice = "Below recommended daily intake!";
+                  if (percentDV > 100) {
+                    notice = "Above recommended daily intake!";
+                    backgroundColor = progressColor;
+                    progressColor = Color.fromARGB(255, 189, 114, 1);
+                  }
+                } else if (percentDV > 100) {
+                  backgroundColor = progressColor;
+                  progressColor = Color.fromARGB(255, 34, 123, 37);
+                }
+                if (percentDV > 100) {
+                  percentDV -= 100;
+                  if (percentDV > 100) {
                     percentDV = 100;
-                    overreccomendation = true;
                   }
                 }
+                String nutrientAmt = userNutrients
+                        .containsKey(nutrient.usdaName)
+                    ? userNutrients[nutrient.usdaName].amount.round().toString()
+                    : "0";
                 return Wrap(
                   spacing: 10.0, // gap between adjacent chips
                   runSpacing: 8.0, // gap between lines
                   alignment: WrapAlignment.center,
                   children: <Widget>[
-                    CircularPercentIndicator(
-                      radius: 50.0,
-                      lineWidth: 5.0,
-                      animation: true,
-                      percent: percentDV / 100,
-                      center: Text("${nutrient.displayName}",
-                          textAlign: TextAlign.center),
-                      //center: Text("${percentDV.toStringAsFixed(3)}"),
-                      circularStrokeCap: CircularStrokeCap.round,
-                      progressColor:
-                          overreccomendation ? Colors.red : Colors.green,
-                      footer: overreccomendation
-                          ? Text(
-                              "\nOver Recommended Daily Intake! \n ${userNutrients[nutrient.usdaName]
-                                  .amount
-                                  .round()
-                                  .toString()}/ ${nutrient.dailyValue.round().toString()} ${nutrient.unitName}",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red,
-                                  fontSize: 14.0),
-                            )
-                          : userNutrients.containsKey(nutrient.usdaName)
-                              ? Text('\n ${userNutrients[nutrient.usdaName]
-                                  .amount
-                                  .round()
-                                  .toString()}/ ${nutrient.dailyValue.round().toString()} ${nutrient.unitName}')
-                              : Text(
-                                  '0/${nutrient.dailyValue.round().toString()} ${nutrient.unitName}'),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white.withOpacity(1.0)),
+                      onPressed: () {
+                        setState(() {
+                          if (showNutrientNotice == nutrient.displayName) {
+                            showNutrientNotice = "";
+                          } else {
+                            showNutrientNotice = nutrient.displayName;
+                          }
+                        });
+                      },
+                      child: CircularPercentIndicator(
+                        radius: 50.0,
+                        lineWidth: 5.0,
+                        animation: true,
+                        percent: percentDV / 100,
+                        center: Text("${nutrient.displayName}",
+                            textAlign: TextAlign.center),
+                        //center: Text("${percentDV.toStringAsFixed(3)}"),
+                        circularStrokeCap: CircularStrokeCap.round,
+                        progressColor: progressColor,
+                        backgroundColor: backgroundColor,
+                        footer: notice != "" &&
+                                showNutrientNotice == nutrient.displayName
+                            ? Text(
+                                "\n$notice \n $nutrientAmt / ${nutrient.dailyValue.round().toString()} ${nutrient.unitName}",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: textColor,
+                                    fontSize: 14.0),
+                              )
+                            : Text(
+                                '\n $nutrientAmt / ${nutrient.dailyValue.round().toString()} ${nutrient.unitName}'),
+                      ),
                     ),
                     // Text(userNutrients[nutrient.usdaName].unitName().toString())
                   ],
