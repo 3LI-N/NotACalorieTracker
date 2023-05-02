@@ -19,7 +19,7 @@ class UserVisualisation extends StatefulWidget {
 
 class _UserVisualisationState extends State<UserVisualisation> {
   var nutrientDVList = NutrientDVList(
-      displayName: '', usdaName: '', dailyValue: 0, unitName: '');
+      displayName: '', usdaName: '', dailyValue: 0, unitName: '', rec: '');
   List<NutrientDVList> _nutrientDVList = [];
 
   @override
@@ -87,6 +87,13 @@ class _UserVisualisationState extends State<UserVisualisation> {
                     overreccomendation = true;
                   }
                 }
+                //add check for inputs
+                if (userNutrients[nutrient.usdaName].amount == null) {
+                  userNutrients[nutrient.usdaName].amount = 0;
+                }
+                if (userNutrients[nutrient.usdaName].unitName == null) {
+                  userNutrients[nutrient.usdaName].unitName = " ";
+                }
                 return Wrap(
                   spacing: 10.0, // gap between adjacent chips
                   runSpacing: 8.0, // gap between lines
@@ -117,7 +124,7 @@ class _UserVisualisationState extends State<UserVisualisation> {
                         .toString()),
                     Text("/"),
                     Text(nutrient.dailyValue.round().toString()),
-                    // Text(userNutrients[nutrient.usdaName].unitName().toString())
+                    Text(userNutrients[nutrient.usdaName].unitName.toString())
                   ],
                 );
               }),

@@ -29,7 +29,7 @@ List<DropdownMenuItem<String>> get dropdownItems {
 
 class _UserProfileState extends State<UserProfile> {
   var nutrientDVList = NutrientDVList(
-      displayName: '', usdaName: '', dailyValue: 0, unitName: '');
+      displayName: '', usdaName: '', dailyValue: 0, unitName: '', rec: '');
   List<NutrientDVList> _nutrientDVList = [];
 
   @override
