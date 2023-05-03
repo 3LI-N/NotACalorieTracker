@@ -42,9 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Food Nutrients",
-          style: TextStyle(fontSize: 28),
+        toolbarHeight: 70,
+        title: Padding(
+          padding: const EdgeInsets.only(top: 20, bottom: 20),
+          child: const Text(
+            "Food Nutrients",
+            style: TextStyle(fontSize: 25),
+          ),
         ),
         actions: [
           PopupMenuButton<int>(
@@ -64,8 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ],
-            offset: Offset(0, 100),
-            color: Colors.grey,
+            offset: Offset(-5, 55),
+            color: Colors.white,
             elevation: 2,
             // on selected we show the dialog box
             onSelected: (value) {
@@ -97,49 +101,60 @@ class _HomeScreenState extends State<HomeScreen> {
               ? const Center(child: CircularProgressIndicator())
               : Expanded(
                   child: ListView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: foodData!.length,
-                      itemBuilder: (context, index) {
-                        return index > 0 &&
-                                foodData![index][2]
-                                    .toLowerCase()
-                                    .contains(searchString)
-                            ? InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DetailScreen(
-                                            int.parse(foodData![index][0]))),
-                                  );
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "${foodData![index][2]}",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.black54),
-                                      ),
-                                      /*Text(
-                                      "${_foodList[index].foodCategory}",
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black38),
-                                    ),*/
-                                    ],
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: foodData!.length,
+                    itemBuilder: (context, index) {
+                      return index > 0 &&
+                              foodData![index][2]
+                                  .toLowerCase()
+                                  .contains(searchString)
+                          ? InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DetailScreen(
+                                          int.parse(foodData![index][0]))),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15, top: 8, right: 15, bottom: 8),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Flexible(
+                                            child: Text(
+                                          "${foodData![index][2]}",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black54),
+                                        )),
+                                        Icon(Icons.chevron_right)
+                                        /*Text(
+                                          "${_foodList[index].foodCategory}",
+                                          style: TextStyle(
+                                              fontSize: 16, color: Colors.black38),
+                                        ),*/
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              )
-                            : Container();
-                      }),
+                                  Divider(color: Colors.black54, height: 25)
+                                ],
+                              ),
+                            )
+                          : Container();
+                    },
+                  ),
                 ),
         ],
       ),
