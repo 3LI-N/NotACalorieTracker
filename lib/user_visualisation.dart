@@ -20,7 +20,7 @@ class UserVisualisation extends StatefulWidget {
 
 class _UserVisualisationState extends State<UserVisualisation> {
   var nutrientDVList = NutrientDVList(
-      displayName: '', usdaName: '', dailyValue: 0, unitName: '');
+      displayName: '', usdaName: '', dailyValue: 0, unitName: '', rec: '');
   List<NutrientDVList> _nutrientDVList = [];
 
   @override
@@ -99,8 +99,10 @@ class _UserVisualisationState extends State<UserVisualisation> {
                   textColor = Colors.red;
                   progressColor = Color.fromARGB(255, 245, 137, 130);
                   notice = "Below recommended daily intake!";
+                  notice = "Maybe eat more ${nutrient.rec}";
                   if (percentDV > 100) {
                     notice = "Above recommended daily intake!";
+                    notice = "Maybe eat less ${nutrient.rec}";
                     backgroundColor = progressColor;
                     progressColor = Color.fromARGB(255, 175, 17, 6);
                   }
@@ -109,8 +111,10 @@ class _UserVisualisationState extends State<UserVisualisation> {
                   textColor = Colors.orange;
                   progressColor = Color.fromARGB(255, 252, 197, 115);
                   notice = "Below recommended daily intake!";
+                  notice = "Maybe eat more ${nutrient.rec}";
                   if (percentDV > 100) {
                     notice = "Above recommended daily intake!";
+                    notice = "Maybe eat less ${nutrient.rec}";
                     backgroundColor = progressColor;
                     progressColor = Color.fromARGB(255, 189, 114, 1);
                   }
